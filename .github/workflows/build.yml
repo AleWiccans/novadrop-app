@@ -13,13 +13,10 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install
+      - run: npm install --legacy-peer-deps   # ← CAMBIADO
       - run: npx expo export --platform android
       - run: npx expo prebuild
-      - run: |
-          cd android
-          chmod +x gradlew
-          ./gradlew assembleDebug
+      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: app-debug
