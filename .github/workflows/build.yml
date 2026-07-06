@@ -14,8 +14,12 @@ jobs:
         with:
           node-version: 18
       - run: npm install
+      - run: npx expo export --platform android
       - run: npx expo prebuild
-      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+      - run: |
+          cd android
+          chmod +x gradlew
+          ./gradlew assembleDebug
       - uses: actions/upload-artifact@v4
         with:
           name: app-debug
