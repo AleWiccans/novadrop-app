@@ -10,15 +10,25 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+
       - uses: actions/setup-node@v4
         with:
           node-version: 20
-      - run: npm install --legacy-peer-deps
-      - run: npm install expo-constants@18.0.0 --legacy-peer-deps
-      - run: npx expo export:embed --platform android --entry-file app/_layout.tsx --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
-      - run: npx expo prebuild
-      - run: cd android && chmod +x gradlew && ./gradlew assembleDebug
-      - uses: actions/upload-artifact@v4
+
+      - name: Instalar dependencias con legacy-peer-deps
+        run: npm install --legacy-peer-deps
+
+      - name: Generar bundle con variable de entorno
+        run: EXPO_ROUTER_DISABLE_RN_NAVIGATION_CHECK=1 npx expo export:embed --platform android --entry-file app/_layout.tsx --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res/
+
+      - name: Prebuild (genera android/)
+        run: npx expo prebuild
+
+      - name: Compilar APK
+        run: cd android && chmod +x gradlew && ./gradlew assembleDebug
+
+      - name: Subir APK como artefacto
+        uses: actions/upload-artifact@v4
         with:
           name: app-debug
           path: android/app/build/outputs/apk/debug/app-debug.apk
