@@ -1,0 +1,71 @@
+module.exports = {
+  expo: {
+    name: "NovaDrop",
+    slug: "novadrop-app-final",
+    version: "1.0.0",
+    orientation: "portrait",
+    icon: "./assets/images/icon.png",
+    scheme: "novadrop",
+    userInterfaceStyle: "dark",
+    ios: {
+      supportsTablet: true,
+      bundleIdentifier: "com.aleyeshua.novadrop",
+    },
+    android: {
+      adaptiveIcon: {
+        backgroundColor: "#0a0e1a",
+        foregroundImage: "./assets/images/android-icon-foreground.png",
+        backgroundImage: "./assets/images/android-icon-background.png",
+        monochromeImage: "./assets/images/android-icon-monochrome.png",
+      },
+      package: "com.aleyeshua.novadrop",
+      predictiveBackGestureEnabled: false,
+      permissions: [
+        "android.permission.READ_CONTACTS",
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.READ_MEDIA_IMAGES",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.WRITE_CONTACTS",
+      ],
+    },
+    web: {
+      output: "static",
+      favicon: "./assets/images/favicon.png",
+    },
+    plugins: [
+      "expo-router",
+      [
+        "expo-splash-screen",
+        {
+          image: "./assets/images/splash-icon.png",
+          imageWidth: 200,
+          resizeMode: "contain",
+          backgroundColor: "#0a0e1a",
+          dark: {
+            backgroundColor: "#0a0e1a",
+          },
+        },
+      ],
+      "expo-sqlite",
+      "expo-image-picker",
+      "expo-contacts",
+      [
+        "expo-document-picker",
+        {
+          iCloudContainerEnvironment: "Production",
+        },
+      ],
+    ],
+    experiments: {
+      typedRoutes: true,
+      reactCompiler: true,
+    },
+    owner: "aleyeshua",
+    extra: {
+      router: {},
+      eas: {
+        projectId: "0492cc38-d896-4967-a63a-6f1f5bf9840b",
+      },
+    },
+  },
+};
